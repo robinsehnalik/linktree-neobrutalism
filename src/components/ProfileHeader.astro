@@ -1,0 +1,121 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	profile: CollectionEntry<'profile'>['data'];
+}
+
+const { profile } = Astro.props;
+
+// Specific social buttons: YouTube, X/Twitter, Instagram, GitHub
+const featuredSocials = [
+	{ platform: 'youtube', label: 'YouTube', url: 'https://youtube.com', icon: 'tabler:brand-youtube' },
+	{ platform: 'x', label: 'X / Twitter', url: 'https://x.com', icon: 'tabler:brand-x' },
+	{ platform: 'instagram', label: 'Instagram', url: 'https://instagram.com', icon: 'tabler:brand-instagram' },
+	{ platform: 'github', label: 'GitHub', url: 'https://github.com', icon: 'tabler:brand-github' },
+];
+---
+
+<section class="flex flex-col items-center text-center pt-2 pb-6">
+	<!-- Centered profile picture with a solid black border and a corner [VERIFIED] badge overlay -->
+	<div class="relative mb-5">
+		<div class="relative w-28 h-28 md:w-32 md:h-32 border-[3px] border-black bg-white p-1 shadow-[4px_4px_0px_#000]">
+			<Image
+				src={profile.avatar}
+				alt={profile.name}
+				width={256}
+				height={256}
+				loading="eager"
+				fetchpriority="high"
+				class="w-full h-full object-cover grayscale contrast-125"
+			/>
+		</div>
+
+		<!-- Corner [VERIFIED] badge overlay in light blue with 2.5px black border -->
+		<div
+			class="absolute -bottom-2.5 -right-3 border-[2.5px] border-black bg-[#BAE6FD] text-black px-2 py-0.5 font-mono text-[10px] font-black tracking-widest uppercase shadow-[2px_2px_0px_#000] flex items-center gap-1 select-none"
+		>
+			<Icon name="tabler:check" size="1.2em" class="stroke-[3]" />
+			<span>VERIFIED</span>
+		</div>
+	</div>
+
+	<!-- Name in heavy all-caps display font -->
+	<div class="mb-3 space-y-1.5">
+		<h1 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-black m-0">
+			{profile.name}
+		</h1>
+		
+		<!-- Role badge and location tag -->
+		<div class="flex items-center flex-wrap justify-center gap-2 pt-1">
+			<!-- Role badge in light blue status chip -->
+			<span class="inline-flex items-center px-2.5 py-1 font-mono text-[11px] font-black uppercase tracking-wider border-[2px] border-black bg-[#BAE6FD] text-black shadow-[2px_2px_0px_#000]">
+				{profile.badge ?? 'DIGITAL CREATOR & DESIGNER'}
+			</span>
+
+			<!-- Location tag -->
+			<span class="inline-flex items-center px-2.5 py-1 font-mono text-[11px] font-black uppercase tracking-wider border-[2px] border-black bg-white text-black shadow-[2px_2px_0px_#000]">
+				SAN FRANCISCO, CA
+			</span>
+		</div>
+	</div>
+
+	<!-- Clean, readable ABOUT ME card -->
+	<div class="w-full max-w-md mx-auto mb-5 border-[2.5px] border-black bg-white p-4 shadow-[4px_4px_0px_#000] text-left">
+		<div class="font-mono text-[11px] font-black uppercase text-black pb-2 mb-2.5 border-b-[2px] border-black flex items-center justify-between">
+			<span class="tracking-widest">ABOUT ME</span>
+			<span class="text-[10px] text-[#4B5563] font-bold">BIO</span>
+		</div>
+		<p class="text-[0.9375rem] text-black font-sans leading-relaxed m-0">
+			{profile.bio}
+		</p>
+	</div>
+
+	<!-- 3-column stat counter grid (SUBSCRIBERS, TOTAL VIEWS, NEWSLETTER) -->
+	<div class="grid grid-cols-3 gap-3 w-full max-w-md mb-6">
+		<div class="border-[2.5px] border-black bg-white p-3 shadow-[4px_4px_0px_#000] text-center">
+			<div class="text-xl md:text-2xl font-black font-mono tracking-tight text-black">
+				142K
+			</div>
+			<div class="text-[10px] font-mono font-extrabold uppercase tracking-widest text-black mt-0.5">
+				SUBSCRIBERS
+			</div>
+		</div>
+
+		<div class="border-[2.5px] border-black bg-white p-3 shadow-[4px_4px_0px_#000] text-center">
+			<div class="text-xl md:text-2xl font-black font-mono tracking-tight text-black">
+				2.8M
+			</div>
+			<div class="text-[10px] font-mono font-extrabold uppercase tracking-widest text-black mt-0.5">
+				TOTAL VIEWS
+			</div>
+		</div>
+
+		<div class="border-[2.5px] border-black bg-white p-3 shadow-[4px_4px_0px_#000] text-center">
+			<div class="text-xl md:text-2xl font-black font-mono tracking-tight text-black">
+				28K
+			</div>
+			<div class="text-[10px] font-mono font-extrabold uppercase tracking-widest text-black mt-0.5">
+				NEWSLETTER
+			</div>
+		</div>
+	</div>
+
+	<!-- Row of square, bordered social icon buttons (YouTube, X/Twitter, Instagram, GitHub) -->
+	<nav aria-label="Social profiles" class="flex flex-wrap items-center justify-center gap-3">
+		{featuredSocials.map((social) => (
+			<a
+				href={social.url}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="nb-button w-12 h-12 border-[2.5px] border-black bg-white text-black shadow-[4px_4px_0px_#000]"
+				aria-label={social.label}
+				title={social.label}
+			>
+				<Icon name={social.icon} size="1.4em" />
+			</a>
+		))}
+	</nav>
+</section>

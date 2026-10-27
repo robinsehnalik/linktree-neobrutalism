@@ -1,0 +1,27 @@
+---
+import { getSite } from '../utils/consts';
+
+const site = await getSite();
+const today = new Date();
+---
+
+<footer class="mt-14 mb-10 pt-6 border-t-[2.5px] border-black text-center text-xs font-mono font-bold text-black">
+	<div class="shell-container flex flex-col items-center gap-3">
+		<p class="m-0 text-[11px] uppercase tracking-widest font-black">
+			&copy; {today.getFullYear()} {site.author ?? 'ALEX VANCE'}. ALL RIGHTS RESERVED.
+		</p>
+
+		<div class="flex items-center gap-3 text-[11px] uppercase tracking-wider font-extrabold">
+			<a href="#privacy" class="hover:underline">PRIVACY</a>
+			<span>/</span>
+			<a href="#terms" class="hover:underline">TERMS</a>
+			<span>/</span>
+			<a href="mailto:hello@alexvance.io" class="hover:underline">CONTACT</a>
+		</div>
+
+		<!-- Subtle creator attribution -->
+		<p class="m-0 pt-1 text-[10px] uppercase tracking-wider text-[#64748B] font-mono">
+			MADE BY <a href="https://sehnalik.com" target="_blank" rel="noopener noreferrer" class="text-black font-extrabold hover:underline">ROBIN SEHNALÍK</a>
+		</p>
+	</div>
+</footer>
